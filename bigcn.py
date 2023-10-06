@@ -23,14 +23,14 @@ def get_adj(x):
         row=torch.tensor(np.array(x.nonzero()))[0],
         col=torch.tensor(np.array(x.nonzero()))[1],
         sparse_sizes=(x.shape[0], x.shape[0]),
-    ).to(device)
+    )
     return adj
 
 
 def get_data(X, metric="linear"):
     dist = pairwise_kernels(X, metric=metric)
     dist_x = get_topX(dist)
-    return torch.tensor(X.values, dtype=torch.float).to(device), get_adj(dist_x)
+    return torch.tensor(X.values, dtype=torch.float), get_adj(dist_x)
 
 
 class AE_GCN(Module):
@@ -72,15 +72,20 @@ class AE_GCN(Module):
         return res
 
 
-def run_model(input_data, params, device):
+def run_model(input_data, params):
     x, adj = get_data(input_data)
     x_t, adj_t = get_data(input_data.T)
+
+    x = x.to(params['device'])
+    adj = adj.to(params['device'])
+    x_t = x_t.to(params['device'])
+    adj_t = adj_t.to(params['device'])
 
     hidden0 = input_data.shape[0]
     hidden1 = input_data.shape[1]
 
-    model = AE_GCN(params).to(device)
-    loss_function = MSELoss().to(device)
+    model = AE_GCN(params).to(params['device'])
+    loss_function = MSELoss().to(params['device'])
     optimizer = getattr(torch.optim, params['optimizer_name'])(
         model.parameters(),
         lr=params["lr"],
