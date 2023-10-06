@@ -55,7 +55,7 @@ class AE_GCN(Module):
         self.batch_norm1 = BatchNorm1d(params["hidden1"])
         self.batch_norm2 = BatchNorm1d(params["hidden0"])
 
-    def forward(self, data, x, adj, x_t, adj_t, clustering):
+    def forward(self, data, x, adj, x_t, adj_t):
         # For Cell similarity
         x = self.dropout1(relu(self.graph_norm1(self.gcn1(x, adj.t()))))
         x = relu(self.graph_norm4(self.gcn4(x, adj.t())))
@@ -66,13 +66,38 @@ class AE_GCN(Module):
 
         res = x + x_t.T
 
-        if clustering:
+        if params['clustering']:
             res = self.batch_norm1(data) + self.batch_norm2(data.T).T
 
         return res
 
 
-def run_model(input_data, params):
+def run_model(input_data, params=None, ):
+    params = {
+        'device': 'cuda',
+        'dropout1': 0.3,
+        'dropout4': 0.1,
+        'epochs': 1500,
+        'hidden2': 128,
+        'hidden7': 1024,
+        'lr': 0.0001,
+        'optimizer': 'Adam',
+        'clustering': False
+    }
+    
+    if params['clustering']:
+        params = {
+            'device': 'cuda',
+            'dropout1': 0.4,
+            'dropout4': 0.3,
+            'epochs': 100,
+            'hidden2': 256,
+            'hidden7': 512,
+            'lr': 0.01, 
+            'optimizer': 'Adam',
+            'clustering': False
+        }
+    
     x, adj = get_data(input_data)
     x_t, adj_t = get_data(input_data.T)
 
@@ -86,7 +111,7 @@ def run_model(input_data, params):
 
     model = AE_GCN(params).to(params['device'])
     loss_function = MSELoss().to(params['device'])
-    optimizer = getattr(torch.optim, params['optimizer_name'])(
+    optimizer = getattr(torch.optim, params['optimizer'])(
         model.parameters(),
         lr=params["lr"],
     )
