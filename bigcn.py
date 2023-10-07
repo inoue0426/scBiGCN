@@ -60,7 +60,7 @@ class AE_GCN(Module):
         self.batch_norm1 = BatchNorm1d(params["hidden1"])
         self.batch_norm2 = BatchNorm1d(params["hidden0"])
 
-    def forward(self, data, x, adj, x_t, adj_t):
+    def forward(self, data, x, adj, x_t, adj_t, clustering):
         """
         data: gene expression matrix
         x: gene expression matrix
@@ -78,7 +78,7 @@ class AE_GCN(Module):
 
         res = x + x_t.T
 
-        if params["clustering"]:
+        if clustering:
             res = self.batch_norm1(data) + self.batch_norm2(data.T).T
 
         return res
@@ -143,7 +143,7 @@ def run_model(input_data, params=None, clustering=False, verbose=False):
         epochs = range(params["epochs"])
 
     for epoch in epochs:
-        reconstructed = model(x, x, adj, x_t, adj_t)
+        reconstructed = model(x, x, adj, x_t, adj_t, clustering)
         loss = loss_function(reconstructed, x)
 
         optimizer.zero_grad()
