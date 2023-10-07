@@ -10,7 +10,7 @@ scBiGCN has been implemented in Python.
 
 To get started immediately, check out our tutorials:
 - [Tutorial](https://github.com/inoue0426/scBiGCN/blob/main/sample%20notebook.ipynb)
-
+https://github.com/inoue0426/scBiGCN/blob/main/sample%20notebook.ipynb
 ## Installation from GitHub
 To clone the repository and install manually, run the following from a terminal:
 ```
