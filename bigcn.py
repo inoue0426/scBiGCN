@@ -12,19 +12,19 @@ from torch_sparse import SparseTensor
 from tqdm import tqdm
 
 
-def get_topX(x):
+def get_topX(X):
     '''Get top X% of the values in the matrix'''
     return X * np.array(
         X > np.percentile(X, 85), dtype=int
     )
 
 
-def get_adj(x):
+def get_adj(X):
     '''Get adjacency matrix from the matrix'''
     adj = SparseTensor(
-        row=torch.tensor(np.array(x.nonzero()))[0],
-        col=torch.tensor(np.array(x.nonzero()))[1],
-        sparse_sizes=(x.shape[0], x.shape[0]),
+        row=torch.tensor(np.array(X.nonzero()))[0],
+        col=torch.tensor(np.array(X.nonzero()))[1],
+        sparse_sizes=(X.shape[0], X.shape[0]),
     )
     return adj
 
@@ -83,7 +83,6 @@ class AE_GCN(Module):
             res = self.batch_norm1(data) + self.batch_norm2(data.T).T
 
         return res
-
 
 def run_model(input_data, params=None, clustering=False):
     '''Run model
