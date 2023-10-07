@@ -12,13 +12,15 @@ from torch_sparse import SparseTensor
 from tqdm import tqdm
 
 
-def get_topX(X):
+def get_topX(x):
+    '''Get top X% of the values in the matrix'''
     return X * np.array(
-        X > max(np.mean(X), np.median(X), np.percentile(X, 85)), dtype=int
+        X > np.percentile(X, 85), dtype=int
     )
 
 
 def get_adj(x):
+    '''Get adjacency matrix from the matrix'''
     adj = SparseTensor(
         row=torch.tensor(np.array(x.nonzero()))[0],
         col=torch.tensor(np.array(x.nonzero()))[1],
@@ -28,12 +30,14 @@ def get_adj(x):
 
 
 def get_data(X, metric="linear"):
+    '''Get data and adjacency matrix from the matrix'''
     dist = pairwise_kernels(X, metric=metric)
     dist_x = get_topX(dist)
     return torch.tensor(X.values, dtype=torch.float), get_adj(dist_x)
 
 
 class AE_GCN(Module):
+    '''Autoencoder with GCN layers'''
     def __init__(
         self,
         params,
@@ -58,6 +62,13 @@ class AE_GCN(Module):
         self.batch_norm2 = BatchNorm1d(params["hidden0"])
 
     def forward(self, data, x, adj, x_t, adj_t):
+        '''
+        data: gene expression matrix
+        x: gene expression matrix
+        adj: cell-cell similarity matrix
+        x_t: transposed gene expression matrix
+        adj_t: gene-gene similarity matrix
+        '''
         # For Cell similarity
         x = self.dropout1(relu(self.graph_norm1(self.gcn1(x, adj.t()))))
         x = relu(self.graph_norm2(self.gcn2(x, adj.t())))
@@ -75,6 +86,13 @@ class AE_GCN(Module):
 
 
 def run_model(input_data, params=None, clustering=False):
+    '''Run model
+
+    input_data: gene expression matrix
+    params: hyperparameters
+    clustering: whether to add batch normalized data
+    '''
+
     params = {
         "device": "cuda",
         "dropout1": 0.3,
