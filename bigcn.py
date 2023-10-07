@@ -13,14 +13,12 @@ from tqdm import tqdm
 
 
 def get_topX(X):
-    '''Get top X% of the values in the matrix'''
-    return X * np.array(
-        X > np.percentile(X, 85), dtype=int
-    )
+    """Get top X% of the values in the matrix"""
+    return X * np.array(X > np.percentile(X, 85), dtype=int)
 
 
 def get_adj(X):
-    '''Get adjacency matrix from the matrix'''
+    """Get adjacency matrix from the matrix"""
     adj = SparseTensor(
         row=torch.tensor(np.array(X.nonzero()))[0],
         col=torch.tensor(np.array(X.nonzero()))[1],
@@ -30,14 +28,15 @@ def get_adj(X):
 
 
 def get_data(X, metric="linear"):
-    '''Get data and adjacency matrix from the matrix'''
+    """Get data and adjacency matrix from the matrix"""
     dist = pairwise_kernels(X, metric=metric)
     dist_x = get_topX(dist)
     return torch.tensor(X.values, dtype=torch.float), get_adj(dist_x)
 
 
 class AE_GCN(Module):
-    '''Autoencoder with GCN layers'''
+    """Autoencoder with GCN layers"""
+
     def __init__(
         self,
         params,
@@ -62,13 +61,13 @@ class AE_GCN(Module):
         self.batch_norm2 = BatchNorm1d(params["hidden0"])
 
     def forward(self, data, x, adj, x_t, adj_t):
-        '''
+        """
         data: gene expression matrix
         x: gene expression matrix
         adj: cell-cell similarity matrix
         x_t: transposed gene expression matrix
         adj_t: gene-gene similarity matrix
-        '''
+        """
         # For Cell similarity
         x = self.dropout1(relu(self.graph_norm1(self.gcn1(x, adj.t()))))
         x = relu(self.graph_norm2(self.gcn2(x, adj.t())))
@@ -84,13 +83,14 @@ class AE_GCN(Module):
 
         return res
 
-def run_model(input_data, params=None, clustering=False):
-    '''Run model
+
+def run_model(input_data, params=None, clustering=False, verbose=False):
+    """Run model
 
     input_data: gene expression matrix
     params: hyperparameters
     clustering: whether to add batch normalized data
-    '''
+    """
 
     params = {
         "device": "cuda",
@@ -125,8 +125,8 @@ def run_model(input_data, params=None, clustering=False):
     x_t = x_t.to(params["device"])
     adj_t = adj_t.to(params["device"])
 
-    hidden0 = input_data.shape[0]
-    hidden1 = input_data.shape[1]
+    params["hidden0"] = input_data.shape[0]
+    params["hidden1"] = input_data.shape[1]
 
     model = AE_GCN(params).to(params["device"])
     loss_function = MSELoss().to(params["device"])
@@ -137,7 +137,12 @@ def run_model(input_data, params=None, clustering=False):
     losses = []
     res = pd.DataFrame()
 
-    for epoch in range(params["epochs"]):
+    if verbose:
+        epochs = tqdm(range(params["epochs"]))
+    else:
+        epochs = range(params["epochs"])
+
+    for epoch in epochs:
         reconstructed = model(x, x, adj, x_t, adj_t)
         loss = loss_function(reconstructed, x)
 
