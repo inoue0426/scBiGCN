@@ -9,7 +9,7 @@ scBiGCN is a method that utilizes two GCNs to reconstruct gene expression matric
 scBiGCN has been implemented in Python.
 
 To get started immediately, check out our tutorials:
-- [Sample Notebook](https://github.com/inoue0426/scBiGCN/blob/main/run_model.ipynb)
+- [Tutorial](https://github.com/inoue0426/scBiGCN/blob/main/sample%20notebook.ipynb)
 
 ## Installation from GitHub
 To clone the repository and install manually, run the following from a terminal:
