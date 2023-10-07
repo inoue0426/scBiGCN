@@ -93,7 +93,6 @@ def run_model(input_data, params=None, clustering=False, verbose=False):
     """
 
     params = {
-        "device": "cuda",
         "dropout1": 0.3,
         "dropout2": 0.1,
         "epochs": 1500,
@@ -106,7 +105,6 @@ def run_model(input_data, params=None, clustering=False, verbose=False):
 
     if clustering:
         params = {
-            "device": "cuda",
             "dropout1": 0.4,
             "dropout2": 0.3,
             "epochs": 100,
@@ -117,19 +115,21 @@ def run_model(input_data, params=None, clustering=False, verbose=False):
             "clustering": True,
         }
 
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
     x, adj = get_data(input_data)
     x_t, adj_t = get_data(input_data.T)
 
-    x = x.to(params["device"])
-    adj = adj.to(params["device"])
-    x_t = x_t.to(params["device"])
-    adj_t = adj_t.to(params["device"])
+    x = x.to(device)
+    adj = adj.to(device)
+    x_t = x_t.to(device)
+    adj_t = adj_t.to(device)
 
     params["hidden0"] = input_data.shape[0]
     params["hidden1"] = input_data.shape[1]
 
-    model = AE_GCN(params).to(params["device"])
-    loss_function = MSELoss().to(params["device"])
+    model = AE_GCN(params).to(device)
+    loss_function = MSELoss().to(device)
     optimizer = getattr(torch.optim, params["optimizer"])(
         model.parameters(),
         lr=params["lr"],
