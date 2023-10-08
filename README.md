@@ -11,20 +11,6 @@ scBiGCN has been implemented in Python.
 To get started immediately, check out our tutorials:
 - [Tutorial](https://github.com/inoue0426/scBiGCN/blob/main/sample%20notebook.ipynb)
 
-## Installation from GitHub
-To clone the repository and install manually, run the following from a terminal:
-```
-git clone git@github.com:inoue0426/scBiGCN.git
-cd scBiGCN
-conda create --name scBiGCN python=3.10 -y
-conda activate scBiGCN
-pip install -r requirement.txt
-
-# Please make sure to change the version to match the version of your GPU/CPU machine exactly.
-pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
-pip install pyg_lib torch_sparse -f https://data.pyg.org/whl/torch-1.13.1%2Bcu116.html
-```
-
 ## Requirement
 
 ```
@@ -44,6 +30,19 @@ tqdm==4.65.0
 Our experiment was conducted on Ubuntu with an RTX 2080, but it also works on an M1 Mac. To use this model, please adjust the requirements to suit your environment, paying special attention to the PyTorch-related libraries. 
 **  Please note that as of October 8, 2023, this model doesn't support GPU on M1 Mac due to compatibility issues with PyTorch Geometric. 
 
+## Installation from GitHub
+To clone the repository and install manually, run the following from a terminal:
+```
+git clone git@github.com:inoue0426/scBiGCN.git
+cd scBiGCN
+conda create --name scBiGCN python=3.10 -y
+conda activate scBiGCN
+pip install -r requirement.txt
+
+# Please make sure to change the version to match the version of your GPU/CPU machine exactly.
+pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
+pip install pyg_lib torch_sparse -f https://data.pyg.org/whl/torch-1.13.1%2Bcu116.html
+```
 
 ## Usage
 
