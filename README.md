@@ -60,5 +60,7 @@ df = pd.read_csv('sample_data/sample_data.csv.gz', index_col=0)
 bigcn.run_model(df, verbose=True)
 ```
 
+You can also try our binder environment.
+
 ## Help
 If you have any questions or require assistance using MAGIC, please feel free to make a issues on https://github.com/inoue0426/scBiGCN/
