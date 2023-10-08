@@ -33,6 +33,8 @@ torch-sparse==0.6.17
 tqdm==4.65.0
 ```
 
+** Note: Here, if you want to use GPU, you need to set your own cuda environment for PyTorch, PyTorch-Geometric, and PyTorch-Sparse
+
 ## Usage
 
 ### Quick Start
