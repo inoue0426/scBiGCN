@@ -39,7 +39,7 @@ git clone git@github.com:inoue0426/scBiGCN.git
 cd scBiGCN
 conda create --name scBiGCN python=3.10 -y
 conda activate scBiGCN
-pip install -r --no-cache-dir  requirement.txt
+pip install -r  requirement.txt
 # Please make sure to change the version to match the version of your GPU/CPU machine exactly.
 pip install --no-cache-dir  torch==1.13.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
 pip install --no-cache-dir torch_geometric
