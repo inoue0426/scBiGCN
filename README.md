@@ -18,7 +18,7 @@ git clone git@github.com:inoue0426/scBiGCN.git
 cd scBiGCN
 conda create --name scBiGCN python=3.10 -y
 conda activate scBiGCN
-pip install -r requirement
+pip install -r requirement.txt
 ```
 
 ## Requirement
@@ -27,9 +27,9 @@ pip install -r requirement
 numpy==1.23.5
 pandas==2.0.3
 scikit-learn==1.3.0
-torch==1.13.1+cu116
+torch==1.13.1
 torch-geometric==2.3.1
-torch-sparse==0.6.17+pt113cu116
+torch-sparse==0.6.17
 tqdm==4.65.0
 ```
 
