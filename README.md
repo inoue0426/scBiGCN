@@ -27,9 +27,9 @@ pip install -r requirement.txt
 numpy==1.23.5
 pandas==2.0.3
 scikit-learn==1.3.0
-torch==1.13.1
+torch==1.13.1+cu116
 torch-geometric==2.3.1
-torch-sparse==0.6.17
+torch-sparse==0.6.17+pt113cu116
 tqdm==4.65.0
 ```
 
