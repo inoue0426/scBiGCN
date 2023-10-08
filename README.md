@@ -40,11 +40,14 @@ cd scBiGCN
 conda create --name scBiGCN python=3.10 -y
 conda activate scBiGCN
 pip install -r requirement.txt
-
+pip cache purge
 # Please make sure to change the version to match the version of your GPU/CPU machine exactly.
 pip install torch==1.13.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
+pip cache purge
 pip install torch_geometric
+pip cache purge
 pip install pyg_lib torch_scatter torch_sparse torch_cluster torch_spline_conv -f https://data.pyg.org/whl/torch-1.13.1%2Bcu116.html
+pip cache purge
 ```
 
 ## Usage
