@@ -16,7 +16,7 @@ To clone the repository and install manually, run the following from a terminal:
 ```
 git clone git@github.com:inoue0426/scBiGCN.git
 cd scBiGCN
-conda create --name scBiGCN python=3.10
+conda create --name scBiGCN python=3.10 -y
 conda activate scBiGCN
 pip install -r requirement
 ```
