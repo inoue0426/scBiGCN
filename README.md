@@ -6,8 +6,6 @@ This is an official implementation of the paper, "BiGCN: Leveraging Cell and Gen
 
 scBiGCN is a method that utilizes two GCNs to reconstruct gene expression matrices based on the similarity matrices of cells and genes. Utilizing each similarity enables the recovery of information lost through Dropout.
 
-<img width="1027" alt="fig1" src="https://github.com/inoue0426/scBiGCN/blob/main/fig1.png">
-
 scBiGCN has been implemented in Python.
 
 To get started immediately, check out our tutorials:
