@@ -4,7 +4,7 @@
 
 This is an official implementation of the paper, "BiGCN: Leveraging Cell and Gene Similarities for Single-cell Transcriptome Imputation with Bi-Graph Convolutional Networks"
 
-scBiGCN is a method that utilizes two GCNs to reconstruct gene expression matrices based on the similarity matrices of cells and genes. Utilizing each similarity enables the recovery of information lost through Dropout.
+scBiGCN is a method that utilizes two GCNs to reconstruct gene expression matrices based on the similarity matrices of cells and genes. Using each similarity enables the recovery of information lost through Dropout.
 
 scBiGCN has been implemented in Python.
 
@@ -27,8 +27,7 @@ tqdm==4.65.0
 
 ## Environment
 
-Our experiment was conducted on Ubuntu with an RTX 2080, but it also works on an M1 Mac. To use this model, please adjust the requirements to suit your environment, paying special attention to the PyTorch-related libraries. 
-**  Please note that as of October 8, 2023, this model doesn't support GPU on M1 Mac due to compatibility issues with PyTorch Geometric. 
+Our experiment was conducted on Ubuntu with an RTX 2080 and Nvidia A100. To use this model, please adjust the requirements to suit your environment, paying special attention to the PyTorch-related libraries. 
 
 ## Installation from GitHub
 To clone the repository and install manually, run the following from a terminal:
@@ -59,4 +58,4 @@ bigcn.run_model(df, verbose=True)
 ```
 
 ## Help
-If you have any questions or require assistance using MAGIC, please feel free to make a issues on https://github.com/inoue0426/scBiGCN/
+If you have any questions or require assistance using MAGIC, please feel free to make an issue on https://github.com/inoue0426/scBiGCN/
