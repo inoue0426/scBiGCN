@@ -57,5 +57,18 @@ df = pd.read_csv('sample_data/sample_data.csv.gz', index_col=0)
 bigcn.run_model(df, verbose=True)
 ```
 
+## Citation
+
+```
+@article{Inoue2022BiGCN,
+  title={BiGCN: Leveraging Cell and Gene Similarities for Single-cell Transcriptome Imputation with Bi-Graph Convolutional Networks},
+  author={Yoshitaka Inoue and Ethan Kulman and Rui Kuang},
+  year={2024},
+  doi={10.1101/2024.04.05.588342},
+  url={https://doi.org/10.1101/2024.04.05.588342}
+}
+```
+
+
 ## Help
 If you have any questions or require assistance using MAGIC, please feel free to make an issue on https://github.com/inoue0426/scBiGCN/
