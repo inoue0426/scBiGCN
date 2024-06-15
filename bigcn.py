@@ -84,13 +84,16 @@ class AE_GCN(Module):
         return res
 
 
-def run_model(input_data, params=None, clustering=False, verbose=False, device=False):
+def run_model(input_data, params=None, clustering=False, verbose=False, device=None):
     """Run model
 
     input_data: gene expression matrix
     params: hyperparameters
     clustering: whether to add batch normalized data
     """
+
+    if device is None:
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     params = {
         "dropout1": 0.3,
@@ -114,8 +117,6 @@ def run_model(input_data, params=None, clustering=False, verbose=False, device=F
             "optimizer": "Adam",
             "clustering": True,
         }
-    if device:
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     x, adj = get_data(input_data)
     x_t, adj_t = get_data(input_data.T)
