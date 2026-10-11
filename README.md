@@ -4,6 +4,10 @@
 
 This is an official implementation of the paper, "BiGCN: Leveraging Cell and Gene Similarities for Single-cell Transcriptome Imputation with Bi-Graph Convolutional Networks"
 
+**[Explore saved notebook output](https://inoue0426.github.io/single-cell-demo/#method=scBiGCN)** · [Run the tutorial](Tutorial.ipynb)
+
+The browser example displays a limited saved notebook excerpt; it does not train a model or reconstruct new data.
+
 scBiGCN is a method that utilizes two GCNs to reconstruct gene expression matrices based on the similarity matrices of cells and genes. Using each similarity enables the recovery of information lost through Dropout.
 
 scBiGCN has been implemented in Python.
